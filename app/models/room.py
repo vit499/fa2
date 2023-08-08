@@ -17,4 +17,4 @@ class Room(Base):
 
     owner = relationship("Flat", back_populates="rooms")
 
-    unitsubsubs = relationship("Dot", back_populates="owner")
+    dots = relationship("Dot", back_populates="owner")

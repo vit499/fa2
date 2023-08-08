@@ -1,4 +1,5 @@
 from typing import Union
+from typing import List
 
 from pydantic import BaseModel
 from .dot import Dot
@@ -22,7 +23,7 @@ class RoomCreate(RoomBase):
 class Room(RoomBase):
     id: int
     owner_id: int
-    dots: list[Dot] = []
+    dots: List[Dot] = []
 
     class Config:
         from_attributes = True

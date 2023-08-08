@@ -1,13 +1,15 @@
 from fastapi import Depends, APIRouter, HTTPException
 from sqlalchemy.orm import Session
 import logging
+from typing import List
+import time
 
 from app import schemas, crud
-from app.api.deps import get_db
+from app.api.deps import get_db, TimedRoute
 
 logger = logging.getLogger(__name__)
 
-router = APIRouter()
+router = APIRouter(route_class=TimedRoute)
 
 @router.post("/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
@@ -19,10 +21,11 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Email already registered")
     r = crud.create_user(db=db, user=user)
     logger.info(f"user.id={r.id}")
+    # time.sleep(15)
     return r
 
 
-@router.get("/", response_model=list[schemas.User])
+@router.get("/", response_model=List[schemas.User])
 def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     users = crud.get_users(db, skip=skip, limit=limit)
     return users

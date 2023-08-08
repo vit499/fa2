@@ -31,6 +31,9 @@ def init() -> None:
     except Exception as e:
         logger.error(e)
         raise e
+    finally:
+        logger.info("db close (start)")
+        db.close()
 
 
 def main() -> None:
@@ -41,7 +44,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-    uvicorn.run("app.main:app", port=8001)
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8001, log_level="debug")
 
 
 # from app import settings

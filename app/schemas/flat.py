@@ -1,4 +1,5 @@
 from typing import Union
+from typing import List
 
 from pydantic import BaseModel
 from .room import Room
@@ -25,7 +26,7 @@ class FlatCreate(FlatBase):
 
 class Flat(FlatBase):
     id: int
-    rooms: list[Room] = []
+    rooms: List[Room] = []
 
     class Config:
         from_attributes = True

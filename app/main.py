@@ -5,6 +5,7 @@ from starlette.requests import Request
 import time
 #from fastapi.logger import logger
 import logging
+from prometheus_fastapi_instrumentator import Instrumentator
 
 from app.api.api import api_router
 from app.core.config import settings
@@ -35,6 +36,7 @@ app = FastAPI()
 #     # response.headers["X-Process-Time"] = str(process_time)
 #     return response
 
+Instrumentator().instrument(app).expose(app)
 
 
 if settings.BACKEND_CORS_ORIGINS:
